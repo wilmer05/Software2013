@@ -44,13 +44,13 @@ class DB_Handler:
     def cargarProducto(self):
       
       #Para prepagos-naturales
-      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta"
+      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta, cl.cedula as id_Cliente"
       consulta2=" FROM producto as p,prepago as pre,cl_natural as cl WHERE ((p.nombre_plan=pre.nombre) AND (p.postiza_c=cl.postiza_n))"
       consulta=consulta+consulta2
       res=self.Hacer_Consulta(consulta)
       
       #Para prepagos-juridicos
-      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta"
+      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta, cl.rif as id_Cliente"
       consulta2=" FROM producto as p,prepago as pre,cl_juridico as cl WHERE ((p.nombre_plan=pre.nombre) AND (p.postiza_c=cl.postiza_j))"
       consulta=consulta+consulta2
       res2=self.Hacer_Consulta(consulta)
@@ -59,7 +59,7 @@ class DB_Handler:
 	res.append(a)
       
       #Postpagos-naturales
-      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta"
+      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta, cl.cedula as id_Cliente"
       consulta2=" FROM producto as p,postpago as pre,cl_natural as cl WHERE ((p.nombre_plan=pre.nombre) AND (p.postiza_c=cl.postiza_n))"
       consulta=consulta+consulta2
       res3=self.Hacer_Consulta(consulta)
@@ -68,7 +68,7 @@ class DB_Handler:
 	res.append(a)
       
       #Postpagos-juridicos
-      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta"
+      consulta="SELECT p.nombre,p.idn,p.rif_em,p.nombre_plan,p.saldo,pre.renta, cl.rif as id_Cliente"
       consulta2=" FROM producto as p,postpago as pre,cl_juridico as cl WHERE ((p.nombre_plan=pre.nombre) AND (p.postiza_c=cl.postiza_j))"
       consulta=consulta+consulta2
       res4=self.Hacer_Consulta(consulta)
