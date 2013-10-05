@@ -13,11 +13,11 @@ class DB_Handler:
     BD_Abierta = None
 
     #Abre una conexion con la base de datos especificada.
-    def Establecer_Conexion(self,nombre,us,passw):
+    def Establecer_Conexion(self):
         #dbname=raw_input("Introduzca nombre de base de datos:")
         #username=raw_input("Introduzca username:")
         #password=raw_input("Introduzca password:")
-        self.BD_Abierta=pg.connect(dbname=nombre, user=us, passwd=passw)
+        self.BD_Abierta=pg.connect(dbname="mc2", user="postgres", passwd="postgres")
 
     #Lista las tablas de la base de datos a la que se haya conectado
     def Listar_Tablas(self):
