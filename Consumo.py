@@ -2,13 +2,7 @@ import sys
 
 class Consumo:
     #Constructor de la clase
-    def __init__(self,costoOFecha,descripcionOid,fechaONombre,id_producto=-1,nombre_producto="-1"):
-        if(nombre_producto=="-1"):
-            self.fecha = costoOFecha
-            self.id_producto = descripcionOid
-            self.nombre_producto = fechaONombre
-
-        else:
+    def __init__(self,costoOFecha,descripcionOid,fechaONombre,id_producto,nombre_producto):
             self.costo = costoOFecha
             self.descripcion = descripcionOid
             self.fecha = fechaONombre
