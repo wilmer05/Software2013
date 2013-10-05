@@ -13,7 +13,7 @@ class DB_Handler:
     BD_Abierta = None
 
     #Abre una conexion con la base de datos especificada.
-    def Establecer_Conexion(self,nombre,us,passw):
+    def Establecer_Conexion(self,nombre,passw,us):
         #dbname=raw_input("Introduzca nombre de base de datos:")
         #username=raw_input("Introduzca username:")
         #password=raw_input("Introduzca password:")
