@@ -2,19 +2,26 @@ import sys
 
 class Consumo:
     #Constructor de la clase
-    def __init__(self,instanciaBD,costo,descripcion,fecha,id_producto,nombre_producto):
-        self.BD = instanciaBD
-        self.costo = costo
-        self.descripcion = descripcion
-        self.fecha = fecha
-        self.id_producto = id_producto
-        self.nombre_producto = nombre_producto
-    
-    def agregar(self):
-        self.BD.agregarConsumo(self.costo,self.descripcion,self.fecha,self.id_producto,self.nombre_producto)
+    def __init__(self,costoOFecha,descripcionOid,fechaONombre,id_producto=-1,nombre_producto="-1"):
+        if(nombre_producto=="-1"):
+            self.fecha = costoOFecha
+            self.id_producto = descripcionOid
+            self.nombre_producto = fechaONombre
 
-    def eliminar(self):
-        self.BD.eliminarConsumo(self.fecha,self.id_producto,self.nombre_producto)
+        else:
+            self.costo = costoOFecha
+            self.descripcion = descripcionOid
+            self.fecha = fechaONombre
+            self.id_producto = id_producto
+            self.nombre_producto = nombre_producto
+        
+
+
+    def agregar(self,BD):
+        BD.agregarConsumo(self.costo,self.descripcion,self.fecha,self.id_producto,self.nombre_producto)
+
+    def eliminar(self,BD):
+        BD.eliminarConsumo(self.fecha,self.id_producto,self.nombre_producto)
 
     def imprimir(self):
         print ""+self.fecha+"  "+self.descripcion+"  "+str(self.costo)
