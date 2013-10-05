@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-15 -*-
+
+import InterfazUsuario as I
+import Empresa as E
+
+if __name__ == "__main__":
+
+    print " >>> Bienvenidos a Innova <<< "
+    print "Introduzca los valores necesarios para la conexión de la base de datos"
+    
+    interfaz = I.InterfazUsuario()
+    interfaz.obtenerConexion()
+    empresa  = E.Empresa(interfaz.getDatos())
+      
+    empresa.cargar()
+
+    while(True):
+    
+        interfaz = I.InterfazUsuario()
+        interfaz.obtenerAccion()
+        empresa.procesar(interfaz.getDatos())
+
+
