@@ -30,8 +30,8 @@ class Consumo:
     def getId_Producto(self):
         return self.id_producto
 
-    def setId_Producto(self, ide):
-        self.id_producto = ide
+    def setId_Producto(self, id):
+        self.id_producto = id
 
     def getNombre_Producto(self):
         return self.nombre_producto

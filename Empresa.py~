@@ -278,7 +278,7 @@ class Empresa:
             existe = (self.listaProducto[i]==producto)
             i=i+1
         if (existe):
-            print self.listaProducto[i-1]
+            self.listaProducto[i-1].imprimir()
         else:
             print "El producto no existe"
      
@@ -289,9 +289,9 @@ class Empresa:
         i=0
         while((i<tamano)and(not(existe))):
 
-            existe = ((self.listaProducto[i].getnombre()==producto.getNombre()) \
+            existe = ((self.listaProducto[i].getNombre()==producto.getNombre()) \
                      and (self.listaProducto[i].getIdn()==producto.getIdn()))
-            i=i+1    ##ojo con los gets
+            i=i+1    
         if (existe):
             print listaProducto[i-1]
         #existe obligatoriamente
@@ -301,8 +301,8 @@ class Empresa:
         existe =False
         for serv in self.listaServicio:
 
-            if ((serv.getnombre()==producto.getNombre()) \
-            and (serv.getIdn()==producto.getIdn())): ##ojo con los gets
+            if ((serv.getNombre()==producto.getNombre()) \
+            and (serv.getIdn()==producto.getIdn())): 
                 print serv
                 existe = True
 
@@ -315,8 +315,8 @@ class Empresa:
         existe = False
         for consumo in self.listaConsumo:
 
-            if ((consumo.getnombre()==producto.getNombre()) \
-            and (consumo.getIdn()==producto.getIdn())): ##ojo con los gets
+            if ((consumo.getNombre()==producto.getNombre()) \
+            and (consumo.getIdn()==producto.getIdn())): 
                 print serv
                 existe = True
 
@@ -336,7 +336,7 @@ class Empresa:
         prodfiltrados = []
         for p in self.listaProducto:
 
-            if(p.getIde()==cliente.getIde()): ##ojo gets
+            if(p.getId_Cliente()==cliente.getIde()): ##ojo gets
      
                 prodfiltrados.append(p)
 
@@ -352,8 +352,8 @@ class Empresa:
             encontrado = False
             while((i<tamano)and(not(encontrado))):
 
-                if ((p.getNombre()==self.listaPlan[i].getNombre()) and \
-                   (p.getrif()==self.listaPlan[i].getrif())): ##ojo gets plan
+                if ((p.getNombre_Plan()==self.listaPlan[i].getNombre()) and \
+                   (p.getRif_Empresa()==self.listaPlan[i].getRif_Empresa())): ##ojo gets plan
                   
                     planfiltrados.append(self.listaPlan[i])
                     encontrado = True
@@ -367,7 +367,7 @@ class Empresa:
 
            for c in self.listaConsumo:
                                                  ####MEGA OJO ACA gets
-                if((p.getNombre()==c.getNombre())and(p.getIdn()==c.getIdn())and \
+                if((p.getNombre()==c.getNombre_Producto())and(p.getIdn()==c.getId_Producto())and \
                   (mes==c.getFecha()[3:5]) and (anio==c.getFecha()[6:10])):
 
                     consumofiltrados.append(c)
@@ -381,8 +381,8 @@ class Empresa:
         for p in listaproductos:
 
            for a in self.listaAdiciona:
-                                                 ##OJO aca gets y 
-                if((p.getNombre()==a.getNombre())and(p.getIdn()==a.getIdn())):
+                                                
+                if((p.getNombre()==a.getNombre_Producto())and(p.getIdn()==a.getId_Producto())):
 
                     adicionafiltrados.append(a)
 
@@ -394,8 +394,8 @@ class Empresa:
         for a in listaadiciona:
 
            for s in self.listaServicio:
-                                                 ##OJO aca gets y 
-                if(a.getNombreS()==s.getNombreS()):
+                                                  
+                if(a.getNombre_Servicio()==s.getNombre()):
 
                     serviciofiltrados.append(s)
 
@@ -407,9 +407,9 @@ class Empresa:
         for p in listaplan:
 
            for ip in self.listaIncluidoPlan:
-                                                 ##OJO aca gets y 
+                                                 
                 if ((p.getNombre()==ip.getNombre()) and \
-                   (p.getrif()==ip.getrif())): ##ojo gets
+                   (p.getRif_Empresa()==ip.getRif_Empresa())): 
                   
                     iplanfiltrados.append(ip)
 
@@ -423,7 +423,7 @@ class Empresa:
 
            for iserv in self.listaIncluidoPlan:
                                                  ##OJO aca gets y 
-                if (s.getNombre()==iserv.getNombre()): ##ojo gets servicio
+                if (s.getNombre()==iserv.getNombre_Sextr()): ##ojo gets servicio
                   
                     iserviciofiltrados.append(iserv)
 
@@ -453,7 +453,7 @@ class Empresa:
             cliente.setIde(datos[1])      ##ojo aca
             self.consultarCliente(cliente)
 
-        elif(datos[0]==3): #agregar producto   #1-idcl 2-nompr 3idp 4rif 5nompl
+        elif((datos[0]==3)or(datos[0]==6)): #agregar producto   #1-idcl 2-nompr 3idp 4rif 5nompl
                                    
             producto = P.Producto(datos[1],datos[3],datos[2],datos[5],None,datos[4], 0)  
             
@@ -464,7 +464,7 @@ class Empresa:
                 return 
             
             cliente = CL.Cliente('', '',datos[1],'')  
-            if (not(self.verificarCliente(cliente))):
+            if (self.verificarCliente(cliente)):
                print 'No existe cliente'
                return
             
@@ -488,84 +488,81 @@ class Empresa:
 
                 print 'No existe el producto'
 
-        elif(datos[0]==6): #afiliar producto/plan    #parece estar con el 3      
- 
-            pass
 
-        elif(datos[0]==7): #afiliar producto/servicio
+        elif(datos[0]==7): #afiliar producto/servicio #1-nompr 2-idn 3-nomserv
         
-            producto = P.Producto(None,None,None) ##
-            producto.setClaves ##      
-            
+            producto = P.Producto(None,datos[2],datos[1],None,None,None,None) 
             if(not(self.verificarProducto(producto))):
 
-                #No existe el producto
+                print 'No existe el producto'
                 return
 
-            servicio = S.Servicio(None, None)
-            servicio.setNombre(datos[3]) #revisar
+            servicio = S.Servicio(None, datos[3])
             
             if(self.verificarServicio(servicio)):
 
-                adiciona = A.Adiciona(datos[2], datos[1], datos[3]) # 1-idp 2-nomp 3-nomserv
+                adiciona = A.Adiciona(datos[2], datos[1], datos[3]) 
                 self.agregarAdiciona(adiciona)
+            else:
+                print 'No existe el servicio'
 
-
-        elif(datos[0]==8): #desafiliar producto/servicio
+        elif(datos[0]==8): #desafiliar producto/servicio #1-nompr 2-idn 3-nomserv
         
-            producto = P.Producto(None,None,None) ##
-            producto.setClaves ##      
-            
+            producto = P.Producto(None,datos[2],datos[1],None,None,None,None) 
             if(not(self.verificarProducto(producto))):
 
-                #No existe el producto
+                print 'No existe el producto'
                 return
 
-            servicio = S.Servicio(None, None)
-            servicio.setNombre(datos[3]) #revisar
+            servicio = S.Servicio(None, datos[3])
             
             if(self.verificarServicio(servicio)):
 
-                adiciona = A.Adiciona(datos[2], datos[1], datos[3]) # 2-idp 1-nomp 3-nomserv
+                adiciona = A.Adiciona(datos[2], datos[1], datos[3]) 
                 self.desafiliarServicio(adiciona)
-
-        elif(datos[0]==9): #consultar plan/producto       
+            else:
+                print 'No existe el servicio'
             
-            producto = P.Producto(None,None,None) ##
-            producto.setClaves ##
+
+
+        elif(datos[0]==9): #consultar plan/producto   #1-nompr 2-idn    
+            
+            producto = P.Producto(None,datos[2],datos[1],None,None,None,None)
+
             if(self.verificarProducto(producto)):
 
                 self.consultarPlanProducto(producto)
 
-        elif(datos[0]==10): #consultar servicios/producto
+        elif(datos[0]==10): #consultar servicios/producto #1-nompr 2-idn 
 
-            producto = P.Producto(None,None,None) ##
-            producto.setClaves ##
+            producto = P.Producto(None,datos[2],datos[1],None,None,None,None)
             if(self.verificarProducto(producto)):
 
                 self.consultarServiciosProducto(producto)
 
-        elif(datos[0]==11): #consultar consumos/producto
+        elif(datos[0]==11): #consultar consumos/producto #1-nompr 2-idn 
 
-            producto = P.Producto(None,None,None) ##
-            producto.setClaves ##
+            producto = P.Producto(None,datos[2],datos[1],None,None,None,None)
+
             if(self.verificarProducto(producto)):
 
                 self.consultarConsumosProducto(producto)
 
         elif(datos[0]==12): #agregar consumo
 
-            producto = P.Producto(None,None,None) ##
-            producto.setClaves ##
+            producto = P.Producto(None,datos[5],datos[4],None,None,None,None)
             if(not(self.verificarProducto(producto))):
                                                  #1-fecha 2-costo 3-serv 4-nomp 5-idnp
-                #no existe el producto
+                print 'No existe el producto'
                 return
-
             consumo = C.Consumo(datos[2],datos[3],datos[1],datos[5], datos[4])
             if(self.verificarConsumo(consumo)):
                 
                 self.agregarConsumo(consumo) 
+
+            else: 
+
+                print 'Ya este consumo fue registrado'
 
         elif(datos[0]==13): #facturar 
 
@@ -573,13 +570,13 @@ class Empresa:
             cliente = CL.Cliente(None,None,None,None)
             cliente.setIde(datos[1])
             if(not(self.verificarCliente(cliente))):
-                #no existe cliente
+                print 'No existe el cliente'
                 return
             cliente = self.buscarCliente(cliente)
             productosfiltrados= self.filtrarProducto(cliente)
             planesfiltrados = self.filtrarPlan(productosfiltrados)
             consumosfiltrados = self.filtrarConsumo(productosfiltrados, \
-                                datos[2], datos[3]) ##mes-anio
+                                datos[2], datos[3]) ##2mes-3anio
             adicionafiltrados = self.filtrarAdiciona(productosfiltrados)
             serviciofiltrados = self.filtrarServicio(adicionafiltrados)
             iplanfiltrados= self.filtrarIncluidoPlan(planesfiltrados)
@@ -589,6 +586,6 @@ class Empresa:
                              productosfiltrados,serviciofiltrados ,datos[2],datos[3],datos[4]) #4-pre o pos         
 
             
-#def aplicar(self,cliente,ladiciona,lconsumos,lincluPlan,lincluServ,lplan,lproductos,lservicios,mes,anio,flag):
+
             
 

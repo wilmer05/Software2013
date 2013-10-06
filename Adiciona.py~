@@ -34,13 +34,13 @@ class Adiciona:
     self.nombre_servicio = nomb_s
   
   #Funcion que se encarga de agregar una de las instancias de adiciona a la base de datos
-  def agregar(self,manejador):
+  def Agregar(self,manejador):
     
     manejador.agregarAdiciona(self.id_producto,self.nombre_producto,self.nombre_servicio)
     return True
   
   #Funcion que se encarga de eliminar una de las instancias de adiciona a la base de datos
-  def eliminar(self,manejador):
+  def Eliminar(self,manejador):
     
     manejador.eliminarAdiciona(self.id_producto,self.nombre_producto,self.nombre_servicio)
     return True

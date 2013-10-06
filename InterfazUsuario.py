@@ -68,25 +68,25 @@ class InterfazUsuario:
         self.datos.append(raw_input('RIF de la empresa:'))
         self.datos.append(raw_input('Nombre del plan:'))
 
-    def obtenerClaveProducto(self):
+    def obtenerClaveProducto(self): 
 
         print ">Por favor, ingresa los datos principales del producto:"
         self.datos.append(raw_input('Nombre del producto:'))
         self.datos.append(int(raw_input('Identificador del producto en la empresa:'))) ##verifcacion numerica
                 
-    def obtenerServicio(self):
+    def obtenerServicio(self):  
 
         print ">Ahora, por favor, ingresa los datos principales del servicio que desea:"
         self.datos.append(raw_input('Nombre del servicio:'))
 
-    def obtenerConsumo(self):
+    def obtenerConsumo(self): 
  
         print ">Por favor, ingresa los datos del consumo"
 	self.datos.append(raw_input("Ingrese la fecha del consumo de la siguiente manera: DD-MM-YYYY hh:mm:ss:"))
-	self.datos.append(raw_input("Ingrese el costo")) ##numerico
+	self.datos.append(int(raw_input("Ingrese el costo"))) ##numerico
 	self.datos.append(raw_input("Ingrese el nombre del servicio:"))
 	self.datos.append(raw_input("Ingrese el nombre del producto"))
-	self.datos.append(raw_input("Ingrese el idn del producto")) #numerico
+	self.datos.append(int(raw_input("Ingrese el idn del producto"))) #numerico
 
 
     def obtenerFactura():
