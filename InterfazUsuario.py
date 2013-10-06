@@ -89,7 +89,7 @@ class InterfazUsuario:
 	self.datos.append(int(raw_input("Ingrese el idn del producto"))) #numerico
 
 
-    def obtenerFactura():
+    def obtenerFactura(self):
 
         print ">Por favor, ingrese los datos necesarios para hacer el consumo"
         print "El cliente al que se facturará es:"

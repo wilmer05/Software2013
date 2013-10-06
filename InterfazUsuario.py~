@@ -79,7 +79,7 @@ class InterfazUsuario:
         print ">Ahora, por favor, ingresa los datos principales del servicio que desea:"
         self.datos.append(raw_input('Nombre del servicio:'))
 
-    def obtenerConsumo(self): #1-fecha 2-costo 3-nomserv 4nompr 5idnpr
+    def obtenerConsumo(self): 
  
         print ">Por favor, ingresa los datos del consumo"
 	self.datos.append(raw_input("Ingrese la fecha del consumo de la siguiente manera: DD-MM-YYYY hh:mm:ss:"))

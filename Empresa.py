@@ -80,13 +80,12 @@ class Empresa:
 
     def cargarPlan(self):
 
-
         planes = self.manejador.cargarPlan()
         for pl in planes:
             if (len(pl)==5):
-                plan = PL.Plan(pl['descripcion'],pl['nombre'],pl['ilimitado'],pl['renta'],pl['rif_empresa'])
+                plan = PL.Plan(pl['descripcion'],pl['ilimitado'],pl['nombre'],pl['renta'],pl['rif_empresa'])
             if (len(pl)==4):
-                plan = PL.Plan(pl['descripcion'], pl['nombre'], 2, pl['renta'], pl['rif_empresa']) ##
+                plan = PL.Plan(pl['descripcion'], 2, pl['nombre'], pl['renta'], pl['rif_empresa']) ##
             self.listaPlan.append(plan)
 
 
@@ -155,7 +154,6 @@ class Empresa:
             i=i+1
 
         return (not existe)
-
 
     def verificarPlan(self, plan):
 
@@ -289,11 +287,11 @@ class Empresa:
         i=0
         while((i<tamano)and(not(existe))):
 
-            existe = ((self.listaProducto[i].getNombre()==producto.getNombre()) \
-                     and (self.listaProducto[i].getIdn()==producto.getIdn()))
+            existe = ((self.listaPlan[i].getNombre()==producto.getNombre()) \
+                     and (self.listaPlan[i].getIdn()==producto.getIdn()))
             i=i+1    
         if (existe):
-            print listaProducto[i-1]
+            self.listaPlan[i-1].imprimir()
         #existe obligatoriamente
 
     def consultarServiciosProducto(self, producto):
@@ -315,9 +313,9 @@ class Empresa:
         existe = False
         for consumo in self.listaConsumo:
 
-            if ((consumo.getNombre()==producto.getNombre()) \
-            and (consumo.getIdn()==producto.getIdn())): 
-                print serv
+            if ((consumo.getNombre_Producto()==producto.getNombre()) \
+            and (consumo.getId_Producto()==producto.getIdn())): 
+                consumo.imprimir()
                 existe = True
 
         if(not(existe)):
@@ -342,7 +340,7 @@ class Empresa:
 
         return prodfiltrados
 
-    def filtrarPlan(self, listaproductos):
+    def filtrarPlan(self, listproductos):
          
         planfiltrados= []
         for p in listproductos:
@@ -401,7 +399,7 @@ class Empresa:
 
         return serviciofiltrados
 
-    def filtrarIncluidoPlan(self, listaPlan):
+    def filtrarIncluidoPlan(self, listaplan):
 
         iplanfiltrados = []
         for p in listaplan:
@@ -416,10 +414,10 @@ class Empresa:
         return iplanfiltrados
 
 
-    def filtrarIncluidoServicio(self, listaServicio):
+    def filtrarIncluidoServicio(self, listaservicio):
 
         iserviciofiltrados = []
-        for s in listaplan:
+        for s in listaservicio:
 
            for iserv in self.listaIncluidoPlan:
                                                  ##OJO aca gets y 
@@ -456,11 +454,11 @@ class Empresa:
         elif((datos[0]==3)or(datos[0]==6)): #agregar producto   #1-idcl 2-nompr 3idp 4rif 5nompl
                                    
             producto = P.Producto(datos[1],datos[3],datos[2],datos[5],None,datos[4], 0)  
-            
-            plan = PL.Plan(None,datos[5],None,None,datos[4])
+           
+            plan = PL.Plan(None,None,datos[5],None,datos[4])
             producto.setRenta(self.obtenerRenta(plan))
             if (self.verificarPlan(plan)):
-                print 'No existe plan'
+                print 'No existe el plan'
                 return 
             
             cliente = CL.Cliente('', '',datos[1],'')  
@@ -566,7 +564,7 @@ class Empresa:
         elif(datos[0]==13): #facturar 
 
 
-            cliente = CL.Cliente(None,None,datos[1],None)
+            cliente = CL.Cliente('','',datos[1],'')
             if(self.verificarCliente(cliente)):
                 print 'No existe el cliente'
                 return

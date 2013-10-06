@@ -6,9 +6,11 @@ class Factura:
   
   #Constructor de la clase
   def __init__(self):
+    pass
   
   #Mediante el patron estrategia, decidimos como facturar
   def ObtenerEstrategia(self,flag):
+    
     self.estrategia=ef.ObtenerEstrategia(flag)
    
   #Funcion a ser llamada por la fachada, con la info que provee se decide (mediante estrategia)

@@ -10,7 +10,8 @@ class Factura:
   
   #Mediante el patron estrategia, decidimos como facturar
   def ObtenerEstrategia(self,flag):
-    self.estrategia=ef.ObtenerEstrategia(flag)
+    eff=ef.estrategiasFacturacion()
+    self.estrategia=eff.ObtenerEstrategia(flag)
    
   #Funcion a ser llamada por la fachada, con la info que provee se decide (mediante estrategia)
   #el metodo de facturacion y se factura.
