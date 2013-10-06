@@ -112,7 +112,7 @@ class InterfazUsuario:
     def obtenerConsumo(self): 
  
         print ">Por favor, ingresa los datos del consumo"
-	self.datos.append(raw_input("Ingrese la fecha del consumo de la siguiente manera: DD-MM-YYYY hh:mm:ss:"))
+	self.datos.append(raw_input("Ingrese la fecha del consumo de la siguiente manera: YYYY-MM-DD hh:mm:ss:"))
         costo = 'a'
         while(not costo.isdigit()):
                 costo = raw_input('Identificador del producto en la empresa:')
@@ -147,15 +147,15 @@ class InterfazUsuario:
             rif = raw_input('RIF: ')
             self.datos.append(rif)
         mes='a'
-        while(not ci.isdigit()):
+        while(not mes.isdigit()):
             mes = raw_input("Mes a facturar:") 
             if (not mes.isdigit()):
                print 'El mes debe ser un número' 
         self.datos.append(int(mes))
         anio='a'
-        while(not ci.isdigit()):
-            mes = raw_input("Año de la factura:") 
-            if (not mes.isdigit()):
+        while(not anio.isdigit()):
+            anio = raw_input("Año de la factura:") 
+            if (not anio.isdigit()):
                print 'El año debe ser un número' 
         self.datos.append(int(anio))
         correcto = False

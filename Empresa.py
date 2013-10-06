@@ -350,28 +350,28 @@ class Empresa:
             encontrado = False
             while((i<tamano)and(not(encontrado))):
 
-                if ((p.getNombre_Plan()==self.listaPlan[i].getNombre()) and \
-                   (p.getRif_Empresa()==self.listaPlan[i].getRif_Empresa())): ##ojo gets plan
+                if ((p.getNombre_Plan()==self.listaPlan[i].getNombre()) and (p.getRif_Empresa()==self.listaPlan[i].getRif_Empresa())): ##ojo gets plan
                   
                     planfiltrados.append(self.listaPlan[i])
                     encontrado = True
-                i=i+1
+		i=i+1
 
         return planfiltrados
 
     def filtrarConsumo(self, listaproductos, mes, anio):
 
-        consumofiltrados = []
-        for p in listaproductos:
+       consumofiltrados = []
+       for p in listaproductos:
 
-           for c in self.listaConsumo:
+          for c in self.listaConsumo:
                                                  ####MEGA OJO ACA gets
-                if((p.getNombre()==c.getNombre_Producto())and(p.getIdn()==c.getId_Producto())and \
-                  (mes==c.getFecha()[3:5]) and (anio==c.getFecha()[6:10])):
+            if((p.getNombre()==c.getNombre_Producto())and(p.getIdn()==c.getId_Producto())and \
+                  (mes==int(c.getFecha()[5:7])) and (anio==int(c.getFecha()[0:4]))):
+		    
 
                     consumofiltrados.append(c)
 
-        return consumofiltrados
+       return consumofiltrados
 
 
     def filtrarAdiciona(self, listaproductos):
@@ -425,7 +425,6 @@ class Empresa:
                 if (s.getNombre()==iserv.getNombre_Sextr()): ##ojo gets servicio
                   
                     iserviciofiltrados.append(iserv)
-
         return iserviciofiltrados
 
     def obtenerRenta(self,plan):
@@ -439,6 +438,9 @@ class Empresa:
 
     def procesar(self,datos):
 
+	if (len(datos)==0):
+	  return
+	  
         if(datos[0]==1): #agregar cliente
 
             cliente = CL.Cliente(datos[4], datos[1], datos[3], datos[2]) # 1-esnat 2-nom 3-ide 4-direccion
@@ -580,7 +582,8 @@ class Empresa:
             iserviciofiltrados = self.filtrarIncluidoServicio(serviciofiltrados)
             factura = F.Factura()
             factura.facturar(cliente,adicionafiltrados,consumosfiltrados,iplanfiltrados,iserviciofiltrados,planesfiltrados, \
-                             productosfiltrados,serviciofiltrados ,datos[2],datos[3],datos[4]) #4-pre o pos         
+                             productosfiltrados,serviciofiltrados ,datos[2],datos[3],datos[4]) #4-pre o pos  
+            factura.imprimir()
 
             
 

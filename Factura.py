@@ -6,6 +6,7 @@ class Factura:
   
   #Constructor de la clase
   def __init__(self):
+    self.descripcion=''
     pass
   
   #Mediante el patron estrategia, decidimos como facturar
@@ -20,8 +21,9 @@ class Factura:
     self.ObtenerEstrategia(flag)
     #Aplicamos la estrategia adecuada (la clase abstracta estrategia decide)
     retorno=self.estrategia.aplicar(cliente,ladiciona,lconsumos,lincluPlan,lincluServ,lplan,lproductos,lservicios,mes,anio)
-    self.monto=retorno[0]
-    self.descripcionImpr=retorno[1]
+    #self.monto=retorno[0]
+    self.descripcion=retorno[1]
     
   def imprimir(self):
     print self.descripcion
+    
