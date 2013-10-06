@@ -152,11 +152,13 @@ class facturarPostpago:
 	#Sumaremos las rentas de los servicios que tiene afiliado
 	#Veo los servicios que ha adicionado y lo comparo con 
 	#los servicios en general, si coinice, agarro su costo.
+      laux3=[]
       sumaservs=0
       for e in lservicios:
 	for h in lservs:
-	  if (e.getNombre() == h.getNombre_Servicio()):
+	  if ((e.getNombre() == h.getNombre_Servicio()) & (h.getNombre_Servicio() not in laux3)):
 	    sumaservs=sumaservs+e.getCosto()
+	    laux3.append(h.getNombre_Servicio())
 	  
 	#Falta contrastar lo consumido(en listasumadaconsumos) con lo incluido
 	#(en lincud)
