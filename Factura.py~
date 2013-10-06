@@ -6,7 +6,6 @@ class Factura:
   
   #Constructor de la clase
   def __init__(self):
-    pass
   
   #Mediante el patron estrategia, decidimos como facturar
   def ObtenerEstrategia(self,flag):

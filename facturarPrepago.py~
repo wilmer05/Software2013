@@ -106,7 +106,7 @@ class facturarPrepago:
       #Conseguimos el valor de la renta del plan asociado al prducto
       renta = self.Renta_Prepago(producto,plan_producto)
       Datos_Impresos += ("Costo: %d\n\n" % (renta))
-      costo_producto += renta
+      costo_producto = += renta
       
       #Sacamos el nombre de todos los servicios adicionales asociados a cada producto
       for adicionales in ladiciona:

@@ -157,7 +157,7 @@ class facturarPostpago:
 	#de la lista.
 	sobrepaso=0
 	for v in listasumadaconsumos:
-	  if (isinstance(v, str)):
+	  if (v isinstanceof str):
 	    pass
 	  else:
 	    if (v > 0):
