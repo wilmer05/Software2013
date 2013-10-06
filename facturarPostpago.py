@@ -22,10 +22,10 @@ class facturarPostpago:
     #Lista con los productos del cliente
     lp=[]
     #Obtenemos identificador del cliente
-    idcliente=cliente.getId()
+    idcliente=cliente.getIde()
     
     for a in lproductos:
-      if (a.getIdcliente() == str(idcliente)):
+      if (a.getId_Cliente() == str(idcliente)):
 	if (self.es_post(a,lplan)):
 	  lp.append(a)
 
@@ -43,9 +43,9 @@ class facturarPostpago:
   def aplicar(self,cliente,ladiciona,lconsumos,lincluPlan,lincluServ,lplan,lproductos,lservicios,mes,anio):
     
     #String que se devolvera
-    stimpr=''
+    strimpr=''
     #Obtenemos los productos del cliente que sean post
-    lp=self.conseguir_productos(cliente,lproductos)
+    lp=self.conseguir_productosPost(cliente,lproductos,lplan)
     
     #Aca se sumaran el total de cada producto facturado, para asi tener un monto
     #total de la factura

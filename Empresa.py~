@@ -102,8 +102,8 @@ class Empresa:
 
         iservicios = self.manejador.cargarIncluidoServicio()
 	for iserv in iservicios:
-            iservicio = IS.IncluidoPlan(iserv['cantidad'], iserv['nombre_sextr'], iserv['tipo']) ##
-            self.listaIncluidoPlan.append(iservicio)
+            iservicio = IS.IncluidoServicio(iserv['cantidad'], iserv['nombre_sextr'], iserv['tipo']) ##
+            self.listaIncluidoServicio.append(iservicio)
 
 
     def verificarCliente(self, cliente):
@@ -315,7 +315,7 @@ class Empresa:
 
             if ((consumo.getNombre_Producto()==producto.getNombre()) \
             and (consumo.getId_Producto()==producto.getIdn())): 
-                print serv
+                consumo.imprimir()
                 existe = True
 
         if(not(existe)):
@@ -355,6 +355,7 @@ class Empresa:
                   
                     planfiltrados.append(self.listaPlan[i])
                     encontrado = True
+                i=i+1
 
         return planfiltrados
 
@@ -419,7 +420,7 @@ class Empresa:
         iserviciofiltrados = []
         for s in listaservicio:
 
-           for iserv in self.listaIncluidoPlan:
+           for iserv in self.listaIncluidoServicio:
                                                  ##OJO aca gets y 
                 if (s.getNombre()==iserv.getNombre_Sextr()): ##ojo gets servicio
                   
