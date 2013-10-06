@@ -1,4 +1,6 @@
 # -*- coding: iso-8859-15 -*-
+import sys
+
 
 class InterfazUsuario:
 
@@ -7,27 +9,40 @@ class InterfazUsuario:
         self.datos = []
 
     def obtenerAccion(self):
-        
-        print "\n\n>Seleccione la acción que desea ejecutar:"
-        print "1.- Manejo de clientes"
-        print "2.- Manejo de productos"
-        print "3.- Manejo de afiliaciones"
-        print "4.- Manejo de consumos"
-        print "5.- Facturacion"
-        
-        self.obtenerDatos(raw_input('Seleccion:'))
+
+        correcto = False
+        while(not(correcto)):
+            print "\n\n>Seleccione la acción que desea ejecutar:"
+            print "1.- Manejo de clientes"
+            print "2.- Manejo de productos"
+            print "3.- Manejo de afiliaciones"
+            print "4.- Manejo de consumos"
+            print "5.- Facturacion"
+            print "6.- Salir"
+            seleccion = raw_input('Seleccion:')
+            if(seleccion.isdigit()):
+                seleccion = int(seleccion)
+                correcto = ((seleccion>0) and (seleccion<7))
+              
+        if(int(seleccion)==6):
+            sys.exit("Programa finalizado.")
+        self.obtenerDatos(int(seleccion))
 
     def obtenerCliente(self):
 
         print ">Por favor, ingresa los datos principales del cliente"
         print "El cliente es:"
-        print "1. Natural"
-        print "2. Jurídico"
+        print "1. Jurídico"
+        print "2. Natural"
         seleccion = raw_input('Seleccion:')
-        self.datos.append(seleccion)
-        if (int(seleccion)==1):
+        self.datos.append(int(seleccion)-1)
+        if (int(seleccion)==2):
             self.datos.append(raw_input('Nombre del cliente:'))
-            ci = raw_input('Cédula: ') ##verificacion
+            ci = 'a'
+            while(not ci.isdigit()):
+                ci = raw_input('Cédula: ')
+                if (not ci.isdigit()):
+                   print 'La cédula debe ser un número' 
             self.datos.append(int(ci))
             self.datos.append(raw_input('Dirección de domicilio:'))
         else:
@@ -44,7 +59,11 @@ class InterfazUsuario:
         print "2. Jurídico"
         seleccion = raw_input('Seleccion:')
         if (int(seleccion)==1):
-            ci = raw_input('Cedula:') ##verificacion
+            ci='a'
+            while(not ci.isdigit()):
+                ci = raw_input('Cedula:') 
+                if (not ci.isdigit()):
+                   print 'La cédula debe ser un número' 
             self.datos.append(int(ci))
         else:
             rif = raw_input('RIF: ') 
@@ -64,7 +83,12 @@ class InterfazUsuario:
             rif = raw_input('RIF: ')
             self.datos.append(rif)
         self.datos.append(raw_input('Nombre del producto:'))
-        self.datos.append(int(raw_input('Identificador del producto en la empresa:'))) ##verifcacion numerica
+        id_emp = 'a'
+        while(not id_emp.isdigit()):
+                id_emp = raw_input('Identificador del producto en la empresa:')
+                if (not id_emp.isdigit()):
+                   print 'El identificador debe ser un número' 
+        self.datos.append(int(id_emp)) 
         self.datos.append(raw_input('RIF de la empresa:'))
         self.datos.append(raw_input('Nombre del plan:'))
 
@@ -72,7 +96,13 @@ class InterfazUsuario:
 
         print ">Por favor, ingresa los datos principales del producto:"
         self.datos.append(raw_input('Nombre del producto:'))
-        self.datos.append(int(raw_input('Identificador del producto en la empresa:'))) ##verifcacion numerica
+        id_emp = 'a'
+        while(not id_emp.isdigit()):
+                id_emp = raw_input('Identificador del producto en la empresa:')
+                if (not id_emp.isdigit()):
+                   print 'El identificador debe ser un número' 
+        self.datos.append(int(id_emp)) 
+         
                 
     def obtenerServicio(self):  
 
@@ -83,10 +113,20 @@ class InterfazUsuario:
  
         print ">Por favor, ingresa los datos del consumo"
 	self.datos.append(raw_input("Ingrese la fecha del consumo de la siguiente manera: DD-MM-YYYY hh:mm:ss:"))
-	self.datos.append(int(raw_input("Ingrese el costo"))) ##numerico
+        costo = 'a'
+        while(not costo.isdigit()):
+                costo = raw_input('Identificador del producto en la empresa:')
+                if (not costo.isdigit()):
+                   print 'El costo debe ser un número positivo' 
+        self.datos.append(int(costo)) 
 	self.datos.append(raw_input("Ingrese el nombre del servicio:"))
 	self.datos.append(raw_input("Ingrese el nombre del producto"))
-	self.datos.append(int(raw_input("Ingrese el idn del producto"))) #numerico
+        id_emp = 'a'
+        while(not id_emp.isdigit()):
+                id_emp = raw_input('Identificador del producto en la empresa:')
+                if (not id_emp.isdigit()):
+                   print 'El identificador debe ser un número' 
+        self.datos.append(int(id_emp)) 
 
 
     def obtenerFactura(self):
@@ -97,17 +137,37 @@ class InterfazUsuario:
         print "2. Jurídico"
         seleccion = raw_input('Seleccion:')
         if (int(seleccion)==1):
-            ci = raw_input('Cedula:') ##verificacion
-            self.datos.append(ci)
+            ci='a'
+            while(not ci.isdigit()):
+                ci = raw_input('Cedula:') 
+                if (not ci.isdigit()):
+                   print 'La cédula debe ser un número' 
+            self.datos.append(int(ci))
         else:
             rif = raw_input('RIF: ')
             self.datos.append(rif)
-	self.datos.append(raw_input("Mes a facturar:")) #numerico
-	self.datos.append(raw_input("Año de la factura:")) ##numerico
-        print "Se facturarán sus productos"
-        print "1. Con plan prepago"
-        print "2. Con plan postpago"
-        seleccion = raw_input('Seleccion:')
+        mes='a'
+        while(not ci.isdigit()):
+            mes = raw_input("Mes a facturar:") 
+            if (not mes.isdigit()):
+               print 'El mes debe ser un número' 
+        self.datos.append(int(mes))
+        anio='a'
+        while(not ci.isdigit()):
+            mes = raw_input("Año de la factura:") 
+            if (not mes.isdigit()):
+               print 'El año debe ser un número' 
+        self.datos.append(int(anio))
+        correcto = False
+        while(not correcto):
+
+            print "Se facturarán sus productos"
+            print "1. Con plan prepago"
+            print "2. Con plan postpago"
+            seleccion = raw_input('Seleccion:')
+            if (seleccion.isdigit()):
+                seleccion = (int(seleccion))
+                correcto = ((seleccion>0)and(seleccion<3))
         if(int(seleccion)==1):
             self.datos.append("pre")
         else:
@@ -119,10 +179,17 @@ class InterfazUsuario:
         print ">Qué desea hacer?"
 
         if(seleccion==1):
-            
-            print "1.- Agregar un cliente"
-            print "2.- Consultar la información de un cliente"
-            opcion = raw_input('Seleccion:')
+            correcto = False
+            while(not correcto):            
+                print "1.- Agregar un cliente"
+                print "2.- Consultar la información de un cliente"
+                print "3.- Regresar"
+                opcion = raw_input('Seleccion:')
+                if (opcion.isdigit()):
+                    opcion = (int(opcion))
+                    correcto = ((opcion>0)and(opcion<4))
+            if(opcion==3):
+                return 
             self.datos.append(int(opcion))
             if(int(opcion)==1):
                 self.obtenerCliente()
@@ -130,11 +197,18 @@ class InterfazUsuario:
                 self.obtenerClaveCliente()           
 
         elif(seleccion==2):
-
-            print "1.-Registrar producto"
-            print "2.-Buscar un producto"
-            print "3.-Eliminar un producto o desafiliar un plan del producto"
-            opcion = raw_input('Seleccion:')
+            correcto = False
+            while(not correcto): 
+                print "1.-Registrar producto"
+                print "2.-Buscar un producto"
+                print "3.-Eliminar un producto o desafiliar un plan del producto"
+                print "4.- Regresar"
+                opcion = raw_input('Seleccion:')
+                if (opcion.isdigit()):
+                    opcion = (int(opcion))
+                    correcto = ((opcion>0)and(opcion<5))
+            if(opcion==4):
+                return 
             self.datos.append(int(opcion)+2)
             if(int(opcion)>1):
                 self.obtenerClaveProducto()
@@ -143,14 +217,21 @@ class InterfazUsuario:
 
         elif(seleccion==3):
 
-            print "1.-Afiliar un producto a un plan." 
-            print "2.-Afiliar un producto a un servicio."
-            print "3.-Desafiliar un producto de un servicio."
-            print "4.-Consultar planes asociados a un producto."
-            print "5.-Consultar servicios asociados a un producto."
-            opcion = raw_input('Seleccion:')
+            correcto = False
+            while(not correcto): 
+                print "1.-Afiliar un producto a un plan." 
+                print "2.-Afiliar un producto a un servicio."
+                print "3.-Desafiliar un producto de un servicio."
+                print "4.-Consultar planes asociados a un producto."
+                print "5.-Consultar servicios asociados a un producto."
+                print "6.- Regresar"
+                opcion = raw_input('Seleccion:')
+                if (opcion.isdigit()):
+                    opcion = (int(opcion))
+                    correcto = ((opcion>0)and(opcion<7))
+            if(opcion==6):
+                return 
             self.datos.append(int(opcion)+5)
-
             if (int(opcion)==1):
                 self.obtenerProducto() 
             elif ((int(opcion)==2) or (int(opcion)==3)):
@@ -162,9 +243,17 @@ class InterfazUsuario:
 
         elif(seleccion==4):
 
-            print "1.- Mostrar todos los consumos del producto."
-            print "2.- Registrar un consumo de un producto"
-            opcion = raw_input('Seleccion:')
+            correcto = False
+            while(not correcto): 
+                print "1.- Mostrar todos los consumos del producto."
+                print "2.- Registrar un consumo de un producto"
+                print "3.- Regresar"
+                opcion = raw_input('Seleccion:')
+                if (opcion.isdigit()):
+                    opcion = (int(opcion))
+                    correcto = ((opcion>0)and(opcion<4))
+            if(opcion==3):
+                return 
             self.datos.append(int(opcion)+10)
 
             if (int(opcion)==1):
@@ -174,10 +263,17 @@ class InterfazUsuario:
 
         elif(seleccion==5):
 
-            print "1.-Facturar a un cliente"
-            opcion = raw_input('Seleccion:')
+            correcto = False
+            while(not correcto): 
+                print "1.-Facturar a un cliente"
+                print "2.- Regresar"
+                opcion = raw_input('Seleccion:')
+                if (opcion.isdigit()):
+                    opcion = (int(opcion))
+                    correcto = ((opcion>0)and(opcion<3))
+            if(opcion==2):
+                return 
             self.datos.append(int(opcion)+12) 
-       
             if(int(opcion)==1):
 
                 self.obtenerFactura()     
