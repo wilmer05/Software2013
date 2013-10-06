@@ -166,10 +166,11 @@ class facturarPostpago:
 	#sobran consumos, que significaria haber consumido de mas.
       for t in listasumadaconsumos:
 	for k in linclud:
-	  if (k == t):
-	    index1=listasumadaconsumos.index(t)
-	    index2=linclud.index(k)
-	    listasumadaconsumos[index1+1]=listasumadaconsumos[index1+1]-linclud[index2+1]
+	  if ((isinstance(k,str)) & (isinstance(t,str))):
+	    if (k == t):
+	      index1=listasumadaconsumos.index(t)
+	      index2=linclud.index(k)
+	      listasumadaconsumos[index1+1]=listasumadaconsumos[index1+1]-linclud[index2+1]
 	      
 	#Recorremos a ver si se sobrepaso con algun consumo
 	#Vamos por la lista, si consigo un string: no hago nada, pues
