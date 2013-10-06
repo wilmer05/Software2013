@@ -20,9 +20,9 @@ class facturarPrepago:
     
     NombrePlan = producto.getNombre_Plan()
     
-    for plan in lplan:
+    for p in lplan:
       
-      if ((NombrePlan == plan.getNombre()) and (not (plan.getIlimitado() in {0,1}))):
+      if ((NombrePlan == p.getNombre()) and (not (p.getIlimitado() in {0,1}))):
 	return True
 	
     return False
@@ -34,11 +34,11 @@ class facturarPrepago:
     #Lista de productos a devolver
     Productos = []
     #Identificador del cliente
-    Identificador = cliente.getId()
+    Identificador = cliente.getIde()
     
     for producto in lproducto:
       
-      if (Identificador == producto.getid_Cliente()):
+      if (Identificador == producto.getId_Cliente()):
 	
 	if (self.Es_Prepago(producto,lplan)):
 	  
@@ -52,11 +52,11 @@ class facturarPrepago:
     
     renta = 0
     
-    for plan in lplan:
+    for p in lplan:
       
-      if (producto.getNombre_Plan() == plan.getNombre()):
+      if (producto.getNombre_Plan() == p.getNombre()):
 	
-	renta = plan.getRenta()
+	renta = p.getRenta()
 	break
 
     return renta
@@ -64,12 +64,12 @@ class facturarPrepago:
 
   #Metodo que aplica la estrategia correspondiente.(facturar prepago)
   #La funcion retornara el monto total, y un string que sera la impresion de la factura.
-  def aplicar(self,cliente,ladiciona,lplan,lproductos,lservicios,mes,anio):
+  def aplicar(self,cliente,ladiciona,lconsumos,lincluPlan,lincluServ,lplan,lproductos,lservicios,mes,anio):
     
     #Identificador del cliente que se desea facturar
-    Identificador = cliente.getId()
+    Identificador = cliente.getIde()
     #Productos prepago asociados al cliente
-    productos = self.Conseguir_Productos_Prepago(cliente,lproductos,lplans)
+    productos = self.Conseguir_Productos_Prepago(cliente,lproductos,lplan)
     #variable que aloja temporalmente el plan asociado a cada producto
     plan_producto = None
     #Monto total de la factura en cuestion
@@ -95,16 +95,16 @@ class facturarPrepago:
       adicionales_producto = []
       
       #Conseguimos el plan asociado al producto
-      for plan in lplan:
+      for p in lplan:
 	
-	if (producto.getNombre_Plan() == plan.getNombre()):
+	if (producto.getNombre_Plan() == p.getNombre()):
 	  
-	  plan_producto = plan
-	  Datos_Impresos += ("Plan contratado: %s\n" % (plan.getNombre())) 
+	  plan_producto = p
+	  Datos_Impresos += ("Plan contratado: %s\n" % (p.getNombre())) 
 	  break
 	  
       #Conseguimos el valor de la renta del plan asociado al prducto
-      renta = self.Renta_Prepago(producto,plan_producto)
+      renta = self.Renta_Prepago(producto,lplan)
       Datos_Impresos += ("Costo: %d\n\n" % (renta))
       costo_producto += renta
       
@@ -126,9 +126,9 @@ class facturarPrepago:
 	#se debe buscar el costo del servicio adicional en la lista de servicios extras
 	for servicios in lservicios:
 	  
-	  if (servi_adic.getNombre() == servicios.getNombre()):
+	  if (servi_adic.getNombre_Servicio() == servicios.getNombre()):
 	    
-	    Datos_Impresos += "%d. %s\n" % (contador2,servi_adic.getNombre())
+	    Datos_Impresos += "%d. %s\n" % (contador2,servi_adic.getNombre_Servicio())
 	    Datos_Impresos += "Costo: %d\n" % (servicios.getCosto())
 	    costo_producto += servicios.getCosto()
 	    contador2 += 1
