@@ -41,11 +41,17 @@ class Adiciona:
   #Funcion que se encarga de agregar una de las instancias de adiciona a la base de datos
   def agregar(self,manejador):
     
-    manejador.agregarAdiciona(self.id_producto,self.nombre_producto,self.nombre_servicio)
-    return True
+    try:
+      manejador.agregarAdiciona(self.id_producto,self.nombre_producto,self.nombre_servicio)
+      return True
+    except:
+      return False
   
   #Funcion que se encarga de eliminar una de las instancias de adiciona a la base de datos
   def eliminar(self,manejador):
     
-    manejador.eliminarAdiciona(self.id_producto,self.nombre_producto,self.nombre_servicio)
-    return True
+    try:
+      manejador.eliminarAdiciona(self.id_producto,self.nombre_producto,self.nombre_servicio)
+      return True
+    except:
+      return False
