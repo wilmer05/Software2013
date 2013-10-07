@@ -10,10 +10,23 @@ import Plan as PL
 import Cliente as CL
 import Producto as P
 import Factura as F
+"""
+Clase Empresa:
+Encargada de todas las funcionalidades del programa.
+Cumple con las tareas de una fachada.
+
+Elaborada por Juan A. Escalante
+"""
+
 
 class Empresa:
 
+    """
+Constructor de la clase
+Contiene la inicializacion de todas las listas a ser cargadas
+desde la base de datos, cuya conexion tambien se inicializa.
 
+    """
     def __init__(self, datosBD):
 
         self.manejador= D.DB_Handler()
@@ -27,6 +40,14 @@ class Empresa:
         self.listaIncluidoPlan = []
         self.listaIncluidoServicio = []
 
+    """
+Metodo cargar:
+
+Llamado desde el main para inializar todas las listas y tener 
+toda la informacion en memoria.
+
+    """
+
     def cargar(self):
 
         self.cargarCliente()
@@ -37,7 +58,13 @@ class Empresa:
         self.cargarAdiciona()
         self.cargarIncluidoPlan()
         self.cargarIncluidoServicio()
-  
+ 
+    """
+Metodo cargarCliente:
+
+Encargada de la carga de todos los clientes presentes en la base de datos.
+
+    """ 
 
     def cargarCliente(self):
 
@@ -48,6 +75,13 @@ class Empresa:
             else:
                  cliente = CL.Cliente(str(cl['direccion']),0,str(cl['rif']), str(cl['nombre'])) 
             self.listaCliente.append(cliente)
+
+    """
+Metodo cargarProducto:
+
+Encargada de la carga de todos los productos presentes en la base de datos.
+
+    """ 
       
     def cargarProducto(self):
 
@@ -56,6 +90,14 @@ class Empresa:
             producto = P.Producto(p['id_cliente'],p['idn'],p['nombre'],p['nombre_plan'],p['renta'],p['rif_em'], p['saldo']) 
             self.listaProducto.append(producto) ##
 
+    """
+Metodo cargarAdiciona:
+
+Encargada de la carga de todos los adiciona presentes en la base de datos.
+Adiciona contiene la afiliacion de un producto con un servicio extra.
+
+    """ 
+
     def cargarAdiciona(self):
 
         tablaadiciona = self.manejador.cargarAdiciona()
@@ -63,20 +105,42 @@ class Empresa:
             ad = A.Adiciona(a['id_producto'], a['nombre_producto'], a['nombre_servicio'])
             self.listaAdiciona.append(ad)  ##
 
+    """
+Metodo cargarConsumo:
+
+Encargada de la carga de todos los consumos presentes en la base de datos.
+
+    """ 
+
     def cargarConsumo(self):
 
 	consumos = self.manejador.cargarConsumo()
 	for c in consumos:
             con = C.Consumo(c['costo'],c['descripcion'],c['fecha'],c['id_producto'], c['nombre_producto']) 
-            self.listaConsumo.append(con) ##
+            self.listaConsumo.append(con) 
 
+
+    """
+Metodo cargarServicio:
+
+Encargada de la carga de todos los servicios extras a 
+ofrecer presentes en la base de datos.
+
+    """ 
 
     def cargarServicio(self):
 
 	servicios = self.manejador.cargarServicio()
 	for s in servicios:
             serv = S.Servicio(s['costo'], s['nombre']) 
-            self.listaServicio.append(serv) ##
+            self.listaServicio.append(serv) 
+
+    """
+Metodo cargarPlan:
+
+Encargada de la carga de todos los planes a ofrecer presentes en la base de datos.
+
+    """ 
 
     def cargarPlan(self):
 
@@ -89,6 +153,14 @@ class Empresa:
             self.listaPlan.append(plan)
 
 
+    """
+Metodo cargarIncluidoPlan:
+
+Encargada de la carga de todos los consumos incluidos en los 
+planes a ofrecer presentes en la base de datos.
+
+    """ 
+
     def cargarIncluidoPlan(self):
 
 	iplanes = self.manejador.cargarIncluidoPlan()
@@ -97,6 +169,13 @@ class Empresa:
             self.listaIncluidoPlan.append(iplan)
 
 
+    """
+Metodo cargarIncluidoServicio:
+
+Encargada de la carga de todos los consumos incluidos en los 
+servicios a ofrecer presentes en la base de datos.
+
+    """  
 
     def cargarIncluidoServicio(self):
 
@@ -104,6 +183,14 @@ class Empresa:
 	for iserv in iservicios:
             iservicio = IS.IncluidoServicio(iserv['cantidad'], iserv['nombre_sextr'], iserv['tipo']) ##
             self.listaIncluidoServicio.append(iservicio)
+
+    """
+Metodo verificarCliente:
+
+Verifica si un cliente puede ser agregado, es decir, que no existe en
+las listas previamente.
+
+    """ 
 
 
     def verificarCliente(self, cliente):
@@ -118,6 +205,13 @@ class Empresa:
 
         return (not existe)
 
+    """
+Metodo verificarProducto:
+
+Verifica si un producto puede ser agregado, es decir, que no existe en
+las listas previamente.
+
+    """
 
     def verificarProducto(self, producto):
 
@@ -131,6 +225,14 @@ class Empresa:
 
         return (not existe)
 
+    """
+Metodo verificarConsumo:
+
+Verifica si un consumo puede ser agregado, es decir, que no existe en
+las listas previamente.
+
+    """
+
     def verificarConsumo(self, consumo):
 
         tamano = len(self.listaConsumo)
@@ -142,6 +244,14 @@ class Empresa:
             i=i+1
 
         return (not existe)
+
+    """
+Metodo verificarServicio:
+
+Verifica si un servicio puede ser afiliado, es decir, que existe en
+las listas previamente.
+
+    """
 
     def verificarServicio(self, servicio):
 
@@ -155,6 +265,14 @@ class Empresa:
 
         return (not existe)
 
+    """
+Metodo verificarPlan:
+
+Verifica si un plan puede ser afiliado, es decir, que existe en
+las listas previamente.
+
+    """
+
     def verificarPlan(self, plan):
 
         tamano = len(self.listaPlan)
@@ -166,6 +284,14 @@ class Empresa:
             i=i+1
 
         return (not existe)
+
+    """
+Metodo verificarAdiciona:
+
+Verifica si un servicio ya no ha sido afiliado a producto, es decir, que existe en
+las listas previamente.
+
+    """
 
     def verificarAdiciona(self, adiciona):
 
@@ -179,6 +305,14 @@ class Empresa:
 
         return (not existe)
 
+    """
+Metodo agregarCliente:
+
+Agrega un cliente verificado a la lista de clientes y a la base 
+de datos configurada. El programa queda actualizado al momento para 
+la siguiente accion.
+
+    """
 
     def agregarCliente(self,cliente):
 
@@ -186,20 +320,54 @@ class Empresa:
         self.listaCliente.append(cliente)
         
 
+    """
+Metodo agregarProducto:
+
+Agrega un producto verificado a las lista de productos y a la base 
+de datos configurada. El programa queda actualizado al momento para 
+la siguiente accion.
+
+    """
+
     def agregarProducto(self, producto):
 
         producto.agregar(self.manejador)
         self.listaProducto.append(producto)
+
+    """
+Metodo agregarConsumo:
+
+Agrega un consumo verificado a la lista de consumos y a la base 
+de datos configurada. El programa queda actualizado al momento para 
+la siguiente accion.
+
+    """
 
     def agregarConsumo(self, consumo):
 
         consumo.agregar(self.manejador)
         self.listaConsumo.append(consumo)
 
+    """
+Metodo agregarAdiciona:
+
+Agrega una afiliacion de servicio verificada a la lista de afiliaciones
+ y a la base de datos configurada. El programa queda actualizado
+ al momento para la siguiente accion.
+
+    """
+
     def agregarAdiciona(self, adiciona):
 
         adiciona.agregar(self.manejador)
         self.listaAdiciona.append(adiciona)
+
+    """
+Metodo eliminarProducto:
+
+Elimina un producto del sistema incluyendo todas sus interacciones.
+
+    """
 
     def eliminarProducto(self, producto):
 
@@ -216,6 +384,13 @@ class Empresa:
                 encontrado = True
             i=i+1      
 
+    """
+Metodo eliminarConsumo:
+
+Elimina todos los consumos de un producto dado del sistema.
+
+    """
+
     def eliminarConsumo(self, producto):
 
         for consumo in self.listaConsumo:
@@ -225,6 +400,13 @@ class Empresa:
               
                 consumo.eliminar(self.manejador)
                 del consumo    
+
+    """
+Metodo eliminarAdiciona:
+
+Elimina todas las afiliaciones de un producto dado del sistema.
+
+    """
     
     def eliminarAdiciona(self, producto):    
 
@@ -235,6 +417,13 @@ class Empresa:
               
                 adiciona.eliminar(self.manejador)
                 del adiciona
+
+    """
+Metodo desafiliarServicio:
+
+Elimina una afiliacion de un servicio a un producto del sistema.
+
+    """
 
     def desafiliarServicio(self, adiciona):
 
@@ -250,7 +439,12 @@ class Empresa:
                 encontrado = True
             i=i+1
 
-         
+    """
+Metodo consultarCliente:
+
+Muestra en pantalla la informacion principal de un cliente.
+
+    """         
 
     def consultarCliente(self,cliente):
 
@@ -267,6 +461,12 @@ class Empresa:
         else:
             print "El cliente no existe"
 
+    """
+Metodo consultarProducto:
+
+Muestra en pantalla la informacion principal de un producto.
+
+    """
 
     def consultarProducto(self,producto):
 
@@ -282,6 +482,14 @@ class Empresa:
             
         else:
             print "El producto no existe"
+
+    """
+Metodo consultarPlanProducto:
+
+Muestra en pantalla la informacion principal del plan afiliado
+a un producto dado.
+
+    """
      
     def consultarPlanProducto(self, producto):
  
@@ -297,6 +505,14 @@ class Empresa:
             print "El producto tiene asociado el plan: \""+self.listaProducto[i-1].getNombre_Plan()+"\""
         #existe obligatoriamente
 
+    """
+Metodo consultarServiciosProducto:
+
+Muestra en pantalla la informacion principal de los servicios afiliados
+a un producto dado.
+
+    """
+
     def consultarServiciosProducto(self, producto):
 	
         existe =False
@@ -310,6 +526,14 @@ class Empresa:
         if(not(existe)):
 
             print "\nNo hay servicios afiliados con el producto \n"
+
+    """
+Metodo consultarConsumosProducto:
+
+Muestra en pantalla la informacion principal de los consumos realizados
+por un producto dado.
+
+    """
 
     def consultarConsumosProducto(self, producto):
 
@@ -325,12 +549,26 @@ class Empresa:
 
             print "\nNo hay consumos realizados con el producto indicado \n"
 
+    """
+Metodo buscarCLiente:
+
+Devuelve la informacion completa de un cliente dado.
+
+    """
+
     def buscarCliente(self, cliente):
 
         for cl in self.listaCliente:
 
             if (cl==cliente):
                 return cl
+
+    """
+Metodo filtrarProducto:
+
+Devuelve los productos asociados a un cliente dado.
+
+    """
 
     def filtrarProducto(self, cliente):
 
@@ -342,6 +580,13 @@ class Empresa:
                 prodfiltrados.append(p)
 
         return prodfiltrados
+
+    """
+Metodo filtrarPlan:
+
+Devuelve los planes asociados a los productos de un cliente.
+
+    """
 
     def filtrarPlan(self, listproductos):
          
@@ -361,6 +606,15 @@ class Empresa:
 
         return planfiltrados
 
+
+    """
+Metodo filtrarConsumo:
+
+Devuelve los consumos realizados por los productos de un cliente en un
+mes y anio especifico.
+
+    """
+
     def filtrarConsumo(self, listaproductos, mes, anio):
 
        consumofiltrados = []
@@ -376,6 +630,13 @@ class Empresa:
 
        return consumofiltrados
 
+    """
+Metodo filtrarAdiciona:
+
+Devuelve las afiliaciones a servicios de los productos de 
+un cliente dado.
+
+    """
 
     def filtrarAdiciona(self, listaproductos):
 
@@ -390,6 +651,13 @@ class Empresa:
 
         return adicionafiltrados
 
+    """
+Metodo filtrarServicio:
+
+Devuelve los servicios afiliados a los productos de un cliente dado.
+
+    """
+
     def filtrarServicio(self, listaadiciona):
 
         serviciofiltrados = []
@@ -402,6 +670,14 @@ class Empresa:
                     serviciofiltrados.append(s)
 
         return serviciofiltrados
+
+    """
+Metodo filtrarIncluidoPlan:
+
+Devuelve los servicios incluidos en los planes asociados a los productos de un
+ cliente dado.
+
+    """
 
     def filtrarIncluidoPlan(self, listaplan):
 
@@ -417,7 +693,13 @@ class Empresa:
 
         return iplanfiltrados
 
+    """
+Metodo filtrarIncluidoServicio:
 
+Devuelve los servicios consumibles incluidos en los servicios extras
+asociados a los productos de un cliente dado.
+
+    """
     def filtrarIncluidoServicio(self, listaservicio):
 
         iserviciofiltrados = []
@@ -430,6 +712,13 @@ class Empresa:
                     iserviciofiltrados.append(iserv)
         return iserviciofiltrados
 
+    """
+Metodo obtenerRenta:
+
+Devuelve la renta de un plan dado. 
+
+    """
+
     def obtenerRenta(self,plan):
 
         for pl in self.listaPlan:
@@ -438,7 +727,15 @@ class Empresa:
                (plan.getRif_Empresa()== pl.getRif_Empresa())):
 
                 return pl.getRenta() 
+    """
+Metodo procesar:
 
+Metodo que toma las decisiones de todas las acciones del programa 
+por la solicitud del usuario a traves de la interfaz.
+
+Sus acciones estan definidas y separadas segun la peticion del usuario.
+
+    """
     def procesar(self,datos):
 
 	if (len(datos)==0):
