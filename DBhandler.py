@@ -165,6 +165,7 @@ class DB_Handler:
     def agregarProducto(self,idn,idcliente,nombre,nombre_plan,rif_em,saldo):
       #Consigo la postiza del cliente
       pnum=-1
+      
       postiza= self.Hacer_Consulta( "select postiza_n from cl_natural where cedula='"+str(idcliente)+"'")
       if (len(postiza) == 0):
 	postiza=self.Hacer_Consulta( "select postiza_j from cl_juridico where rif='"+str(idcliente)+"'")
@@ -174,15 +175,15 @@ class DB_Handler:
 	pnum = 0
 	pnum=postiza[0]['postiza_n']
 	
-      self.Hacer_Consulta("INSERT INTO producto VALUES ('"+nombre+"','"+str(idn)+"','"+str(pnum)+"','"+str(rif_em)+"','"+nombre_plan+"','"+str(saldo)+"')")
+      self.Hacer_Consulta("INSERT INTO producto VALUES ('"+str(nombre)+"','"+str(idn)+"','"+str(pnum)+"','"+str(rif_em)+"','"+nombre_plan+"','"+str(saldo)+"')")
     
     #Eliminaciones de la BD
     
     def eliminarConsumo(self,fecha,idproducto,nombreproducto):
       self.Hacer_Consulta("DELETE FROM consumo WHERE nombre_producto = '"+nombreproducto+"' AND id_producto = '"+str(idproducto)+"'")
       
-    def eliminarAdiciona(self,idproducto,nombreproducto):
-      self.Hacer_Consulta("DELETE FROM adiciona WHERE nombre_producto='"+nombreproducto+"' and id_producto='"+str(idproducto)+"'")
+    def eliminarAdiciona(self,idproducto,nombreproducto,nombreservicio):
+      self.Hacer_Consulta("DELETE FROM adiciona WHERE nombre_producto='"+nombreproducto+"' and id_producto='"+str(idproducto)+"'"+" and nombre_servicio='"+str(nombreservicio)+"'")
       
     def eliminarProducto(self,idproducto,nombreproducto):
       self.Hacer_Consulta("DELETE FROM producto WHERE nombre ='"+nombreproducto+"' and idn='"+str(idproducto)+"'")

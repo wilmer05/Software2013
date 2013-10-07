@@ -115,12 +115,12 @@ class InterfazUsuario:
 	self.datos.append(raw_input("Ingrese la fecha del consumo de la siguiente manera: YYYY-MM-DD hh:mm:ss:"))
         costo = 'a'
         while(not costo.isdigit()):
-                costo = raw_input('Identificador del producto en la empresa:')
+                costo = raw_input('Identificador costo del consumo:')
                 if (not costo.isdigit()):
                    print 'El costo debe ser un número positivo' 
         self.datos.append(int(costo)) 
 	self.datos.append(raw_input("Ingrese el nombre del servicio:"))
-	self.datos.append(raw_input("Ingrese el nombre del producto"))
+	self.datos.append(raw_input("Ingrese el nombre del producto:"))
         id_emp = 'a'
         while(not id_emp.isdigit()):
                 id_emp = raw_input('Identificador del producto en la empresa:')

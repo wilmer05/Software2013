@@ -11,7 +11,7 @@ class Plan(object):
         self.renta = renta
 
     def __eq__(self,otr):
-        return self.nombre==otr.getNombre() and self.rif_empresa==otr.getRif_Empresa()
+        return str(self.nombre)==str(otr.getNombre()) and str(self.rif_empresa)==str(otr.getRif_Empresa())
 
     #Definicion de getters y setters de la clase
     def getNombre(self):

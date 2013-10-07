@@ -9,6 +9,11 @@ class Adiciona:
     self.nombre_producto = nombre_producto
     self.nombre_servicio = nombre_servicio
   
+  def __eq__(self,otro):
+    return self.id_producto == otro.getId_Producto() and self.nombre_producto == otro.getNombre_Producto() and \
+	    self.nombre_servicio == otro.getNombre_Servicio()
+  
+  
   #Funcion para obtener el Id del producto en una instancia de Adiciona
   def getId_Producto(self):
     return self.id_producto

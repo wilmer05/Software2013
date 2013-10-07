@@ -211,8 +211,8 @@ class Empresa:
         while((i<tamano)and(not(encontrado))):
 
             if (self.listaProducto[i]==producto):
-                listaProducto[i].eliminar(self.manejador)
-                del listaProducto[i]
+                self.listaProducto[i].eliminar(self.manejador)
+                del self.listaProducto[i]
                 encontrado = True
             i=i+1      
 
@@ -220,8 +220,8 @@ class Empresa:
 
         for consumo in self.listaConsumo:
 
-           if((producto.getNombre_Producto()==consumo.getNombre_Producto()) \
-               and (producto.getId()==consumo.getId())): ##ojo con los gets
+           if((producto.getNombre()==consumo.getNombre_Producto()) \
+               and (producto.getIdn()==consumo.getId_Producto())): ##ojo con los gets
               
                 consumo.eliminar(self.manejador)
                 del consumo    
@@ -230,8 +230,8 @@ class Empresa:
 
         for adiciona in self.listaAdiciona:
 
-           if((producto.getNombre_Producto()==adiciona.getNombre_Producto()) \
-               and (producto.getId()==adiciona.getId())): ##ojo con los gets
+           if((producto.getNombre()==adiciona.getNombre_Producto()) \
+               and (producto.getIdn()==adiciona.getId_Producto())): ##ojo con los gets
               
                 adiciona.eliminar(self.manejador)
                 del adiciona
@@ -243,9 +243,10 @@ class Empresa:
         i=0
         while((i<tamano)and(not(encontrado))):
 
-            if (listaAdiciona[i]==adiciona):
-                listaAdiciona[i].eliminar(self.manejador)
-                del listaProducto[i]
+            if (self.listaAdiciona[i]==adiciona):
+                self.listaAdiciona[i].eliminar(self.manejador)
+                del self.listaAdiciona[i]
+                
                 encontrado = True
             i=i+1
 
@@ -261,7 +262,8 @@ class Empresa:
             existe = (self.listaCliente[i]==cliente)
             i=i+1
         if (existe):
-            print self.listaCliente[i-1]
+	    cl = self.listaCliente[i-1]
+            print "Cliente: "+cl.getNombre()+", Dirección: "+cl.getDireccion()
         else:
             print "El cliente no existe"
 
@@ -277,31 +279,32 @@ class Empresa:
             i=i+1
         if (existe):
             self.listaProducto[i-1].imprimir()
+            
         else:
             print "El producto no existe"
      
     def consultarPlanProducto(self, producto):
  
-        tamano = len(self.listaPlan)
+        tamano = len(self.listaProducto)
         existe= False
         i=0
+        
         while((i<tamano)and(not(existe))):
 
-            existe = ((self.listaPlan[i].getNombre()==producto.getNombre()) \
-                     and (self.listaPlan[i].getIdn()==producto.getIdn()))
+            existe = (self.listaProducto[i]==producto)
             i=i+1    
         if (existe):
-            self.listaPlan[i-1].imprimir()
+            print "El producto tiene asociado el plan: \""+self.listaProducto[i-1].getNombre_Plan()+"\""
         #existe obligatoriamente
 
     def consultarServiciosProducto(self, producto):
-
+	
         existe =False
-        for serv in self.listaServicio:
+        for serv in self.listaAdiciona:
 
-            if ((serv.getNombre()==producto.getNombre()) \
-            and (serv.getIdn()==producto.getIdn())): 
-                print serv
+            if ((serv.getNombre_Producto()==producto.getNombre()) \
+            and (serv.getId_Producto()==producto.getIdn())): 
+                print serv.getNombre_Servicio()
                 existe = True
 
         if(not(existe)):
@@ -472,18 +475,22 @@ class Empresa:
             if (self.verificarProducto(producto)):
 
                 self.agregarProducto(producto)
+                print "El producto se ha agregado con exito"
+            else:
+		print "El producto ya existe"
  
         elif(datos[0]==4): #consultar producto  #1-nompr 2-idn
-
+	    
             producto = P.Producto(None,datos[2],datos[1],None,None,None, None)
             self.consultarProducto(producto)  
 
         elif(datos[0]==5): #eliminar producto #1-nompr 2-idn 
 
             producto = P.Producto(None,datos[2],datos[1],None,None,None, None)
-            if(not(verificarProducto(producto))):
+            if(not(self.verificarProducto(producto))):
                 
                 self.eliminarProducto(producto)
+		print "El producto se ha eliminado con éxito"
 
             else:
 
@@ -503,6 +510,7 @@ class Empresa:
 
                 adiciona = A.Adiciona(datos[2], datos[1], datos[3]) 
                 self.agregarAdiciona(adiciona)
+                print "El producto se ha afiliado con exito"
             else:
                 print 'No existe el servicio'
 
@@ -520,6 +528,7 @@ class Empresa:
 
                 adiciona = A.Adiciona(datos[2], datos[1], datos[3]) 
                 self.desafiliarServicio(adiciona)
+                print "El producto se ha desafiliado con éxito"
             else:
                 print 'No existe el servicio'
             
@@ -530,7 +539,7 @@ class Empresa:
             producto = P.Producto(None,datos[2],datos[1],None,None,None,None)
 
             if(not(self.verificarProducto(producto))):
-
+		
                 self.consultarPlanProducto(producto)
 
         elif(datos[0]==10): #consultar servicios/producto #1-nompr 2-idn 
@@ -547,6 +556,8 @@ class Empresa:
             if(not(self.verificarProducto(producto))):
 
                 self.consultarConsumosProducto(producto)
+            else:
+	      print "Los datos introducidos son inválidos, debe ser un producto existente"
 
         elif(datos[0]==12): #agregar consumo
 
@@ -559,7 +570,7 @@ class Empresa:
             if(self.verificarConsumo(consumo)):
                 
                 self.agregarConsumo(consumo) 
-
+		print "Se ha agregado el consumo"
             else: 
 
                 print 'Ya este consumo fue registrado'

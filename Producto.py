@@ -11,7 +11,7 @@ class Producto(object):
         self.saldo = saldo
 
     def __eq__(self,otro):
-        return self.idn == otro.getIdn() and self.nombre==otro.getNombre()
+        return str(self.idn) == str(otro.getIdn()) and str(self.nombre)==str(otro.getNombre())
 
 
     def imprimir(self):
