@@ -1,12 +1,34 @@
 # -*- coding: iso-8859-15 -*-
 import sys
+    
+"""
+Clase InterfazUsuario:
 
+Clase dedicada a la interaccion con el usuario.
+Segun la accion que se desea realizar se piden los datos necesarios.
+    
+"""
 
 class InterfazUsuario:
 
+    """
+Constructor de la clase:
+
+Se inicializa la lista donde se guardaran los datos a procesar.
+
+    """
     def __init__(self):
 
         self.datos = []
+
+    """
+metodo obtenerAccion:
+
+En este menu se filtra con que actor se desea interactuar durante el
+proceso.
+
+    
+    """
 
     def obtenerAccion(self):
 
@@ -27,6 +49,14 @@ class InterfazUsuario:
         if(int(seleccion)==6):
             sys.exit("Programa finalizado.")
         self.obtenerDatos(int(seleccion))
+
+    """
+metodo obtenerCliente:
+
+En este menu se obtienen los datos completos del cliente.
+
+    
+    """
 
     def obtenerCliente(self):
 
@@ -51,6 +81,14 @@ class InterfazUsuario:
             self.datos.append(rif)
             self.datos.append(raw_input('Dirección del establecimiento:'))
 
+    """
+metodo obtenerClaveCliente:
+
+En este menu se obtienen los datos minimos para reconocer cliente.
+
+    
+    """
+
     def obtenerClaveCliente(self):
 
         print ">Por favor, ingresa los datos principales del cliente"
@@ -68,7 +106,15 @@ class InterfazUsuario:
         else:
             rif = raw_input('RIF: ') 
             self.datos.append(rif)
-        
+ 
+    """
+metodo obtenerProducto:
+
+En este menu se obtienen los datos completos del producto.
+
+    
+    """
+       
     def obtenerProducto(self):
 
         print ">Por favor, ingresa los datos principales del producto a agregar"
@@ -92,6 +138,15 @@ class InterfazUsuario:
         self.datos.append(raw_input('RIF de la empresa:'))
         self.datos.append(raw_input('Nombre del plan:'))
 
+
+    """
+metodo obtenerClaveProducto:
+
+En este menu se obtienen los datos minimos para reconocer un producto.
+
+    
+    """
+
     def obtenerClaveProducto(self): 
 
         print ">Por favor, ingresa los datos principales del producto:"
@@ -102,7 +157,15 @@ class InterfazUsuario:
                 if (not id_emp.isdigit()):
                    print 'El identificador debe ser un número' 
         self.datos.append(int(id_emp)) 
-         
+ 
+
+    """
+metodo obtenerServicio:
+
+En este menu se obtienen los datos minimos para reconocer un servicio.
+
+    
+    """        
                 
     def obtenerServicio(self):  
 
@@ -128,6 +191,14 @@ class InterfazUsuario:
                    print 'El identificador debe ser un número' 
         self.datos.append(int(id_emp)) 
 
+
+    """
+metodo obtenerFactura:
+
+En este menu se obtienen los datos para procesar una factura.
+
+    
+    """
 
     def obtenerFactura(self):
 
@@ -172,6 +243,15 @@ class InterfazUsuario:
             self.datos.append("pre")
         else:
             self.datos.append("pos")
+
+    """
+metodo obtenerDatos:
+
+Este metodo tiene todo los submenus para cada actor y ofrece las 
+acciones que se puede realizar.
+
+    
+    """
 
     def obtenerDatos(self,seleccion):
 
@@ -278,6 +358,16 @@ class InterfazUsuario:
 
                 self.obtenerFactura()     
 
+
+    """
+metodo obtenerConexion:
+
+En este menu se obtienen los datos necesarios para hacer la conexion
+con la base de datos.
+
+    
+    """
+
     def obtenerConexion(self):
 
         bdname=raw_input("Introduzca nombre de la base de datos:")
@@ -285,6 +375,9 @@ class InterfazUsuario:
         password=raw_input("Introduzca su password:")
         self.datos = [bdname, password, username]
 
+
+
+    #Se obtiene la lista con los datos completos
     def getDatos(self):
 
         return self.datos 

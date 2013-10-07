@@ -4,17 +4,29 @@
 import InterfazUsuario as I
 import Empresa as E
 
+"""
+Main:
+
+Modulo llamado para ejecutar el programa, ofrece las opciones
+repetitivamente hasta que se desee salir
+    
+"""
+
 if __name__ == "__main__":
 
     print " >>> Bienvenidos a Innova <<< "
     print "Introduzca los valores necesarios para la conexión de la base de datos"
     
+
+    #conexion con la base de datos
     interfaz = I.InterfazUsuario()
     interfaz.obtenerConexion()
     empresa  = E.Empresa(interfaz.getDatos())
       
+    #carga de todos los datos del sistema a la base de datos
     empresa.cargar()
 
+    #ciclo de operaciones
     while(True):
     
         interfaz = I.InterfazUsuario()
