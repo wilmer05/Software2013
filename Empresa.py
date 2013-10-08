@@ -511,10 +511,7 @@ Elimina una afiliacion de un servicio a un producto del sistema.
 			  contador2 = contador2 + 1
 			  continue
 		      
-		      print decorador.getNombreServicio()
-		      print adiciona.getNombre_Servicio()
-		      print decorador.getIdn()
-		      print str(adiciona.getId_Producto())
+		      
 		      
 		      
 		      if(decorador.getNombreServicio()==adiciona.getNombre_Servicio() and  str(decorador.getIdn())==str(adiciona.getId_Producto())):
@@ -524,7 +521,7 @@ Elimina una afiliacion de un servicio a un producto del sistema.
 				  self.listaDecorados[contador][contador2+1].setPadre(self.listaDecorados[contador][contador2-1])
 			      del self.listaDecorados[contador][contador2]
 			      producto.setRenta(self.listaDecorados[contador][0].getRenta())
-			      print producto.getRenta()
+			      
 			      
 		      contador2 = contador2 + 1
 		    
