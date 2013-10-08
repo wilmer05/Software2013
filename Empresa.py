@@ -404,13 +404,27 @@ Agrega una afiliacion de servicio verificada a la lista de afiliaciones
 	    
 	    if(adiciona.getNombre_Producto()==producto.getNombre() and \
 	      str(adiciona.getId_Producto())==str(producto.getIdn())):
-		  
+		  seguir = True
+		  contadorD = 0
+		  for k in self.listaDecorados[contador]:
+		      if(contadorD==0):
+			  contadorD = contadorD + 1
+			  continue
+		      seguir = seguir and (str(adiciona.getNombre_Servicio())!=str(k.getNombreServicio()))
+		      contadorD = contadorD + 1
+		  if(not seguir):
+		      break
 		  if(str(adiciona.getNombre_Servicio())=="Mensajes"):
-		      self.listaDecorados[contador].append(DE.DecoradorMensajes(producto.getId_Cliente(),adiciona.getNombre_Producto(),None,None,self.listaDecorados[contador][-1],None,None))
+		      self.listaDecorados[contador].append(DE.DecoradorMensajes(producto.getId_Cliente(),producto.getIdn(),None,None,self.listaDecorados[contador][-1],None,None))
+		      
+		      producto.setRenta(self.listaDecorados[contador][0].getRenta()+self.listaDecorados[contador][-1].getCostoServicio())
+		      self.listaDecorados[contador][0].setRenta(self.listaDecorados[contador][0].getRenta()+self.listaDecorados[contador][-1].getCostoServicio())
+		      
 		  elif(str(adiciona.getNombre_Servicio())=="Segundos"):
-		      self.listaDecorados[contador].append(DE.DecoradorSegundos(producto.getId_Cliente(),adiciona.getNombre_Producto(),None,None,self.listaDecorados[contador][-1],None,None))
-		  
-		  
+		      self.listaDecorados[contador].append(DE.DecoradorSegundos(producto.getId_Cliente(),producto.getIdn(),None,None,self.listaDecorados[contador][-1],None,None))
+		      producto.setRenta(self.listaDecorados[contador][0].getRenta()+self.listaDecorados[contador][-1].getCostoServicio())
+		      self.listaDecorados[contador][0].setRenta(self.listaDecorados[contador][0].getRenta()+self.listaDecorados[contador][-1].getCostoServicio())
+		      
 		  break
 	    contador = contador + 1
 	    
@@ -497,14 +511,20 @@ Elimina una afiliacion de un servicio a un producto del sistema.
 			  contador2 = contador2 + 1
 			  continue
 		      
-		      if(decorador.getNombreServicio()==adiciona.getNombre_Servicio() and\
-			  str(decorador.getIdn())==str(adiciona.getId_Producto())):
+		      print decorador.getNombreServicio()
+		      print adiciona.getNombre_Servicio()
+		      print decorador.getIdn()
+		      print str(adiciona.getId_Producto())
+		      
+		      
+		      if(decorador.getNombreServicio()==adiciona.getNombre_Servicio() and  str(decorador.getIdn())==str(adiciona.getId_Producto())):
 			      self.listaDecorados[contador][0].setRenta(\
 				    self.listaDecorados[contador][0].getRenta()-decorador.getCostoServicio())
 			      if(contador2<len(self.listaDecorados[contador])-1):
 				  self.listaDecorados[contador][contador2+1].setPadre(self.listaDecorados[contador][contador2-1])
 			      del self.listaDecorados[contador][contador2]
-			      
+			      producto.setRenta(self.listaDecorados[contador][0].getRenta())
+			      print producto.getRenta()
 			      
 		      contador2 = contador2 + 1
 		    
