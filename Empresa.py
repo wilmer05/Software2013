@@ -10,6 +10,7 @@ import Plan as PL
 import Cliente as CL
 import Producto as P
 import Factura as F
+import Decoradores as DE
 """
 Clase Empresa:
 Encargada de todas las funcionalidades del programa.
@@ -39,6 +40,7 @@ desde la base de datos, cuya conexion tambien se inicializa.
         self.listaPlan= []
         self.listaIncluidoPlan = []
         self.listaIncluidoServicio = []
+        self.listaDecorados = []
 
     """
 Metodo cargar:
@@ -58,6 +60,7 @@ toda la informacion en memoria.
         self.cargarAdiciona()
         self.cargarIncluidoPlan()
         self.cargarIncluidoServicio()
+        self.cargarDecoradores()
  
     """
 Metodo cargarCliente:
@@ -105,6 +108,43 @@ Adiciona contiene la afiliacion de un producto con un servicio extra.
             ad = A.Adiciona(a['id_producto'], a['nombre_producto'], a['nombre_servicio'])
             self.listaAdiciona.append(ad)  ##
 
+    """
+Metodo cargarDecoradores:
+
+Encargada de la carga de todos los decoradores presentes en la base de datos.
+
+    """ 
+    def cargarDecoradores(self):        
+	#Agrego todos los productos  sin decoradciones aún a la lista 
+	#de decorados
+	contador = 0
+	for prod in self.listaProducto:
+	    self.listaDecorados.append([prod])
+	    
+	    contador = contador + 1
+	contador = 0
+	for prod in self.listaDecorados:
+	    for adiciona in self.listaAdiciona:
+		if(prod[0].getNombre()==adiciona.getNombre_Producto() \
+		    and prod[0].getIdn()==adiciona.getId_Producto() ):
+			agregar = None
+			#Busco cual es el decorador a usar
+			
+			if(str(adiciona.getNombre_Servicio())=="Mensajes"):
+			  
+			     agregar = DE.DecoradorMensajes(prod[0].getId_Cliente(),adiciona.getId_Producto(),None,None,prod[-1],None,None)
+			elif(str(adiciona.getNombre_Servicio())=="Segundos"):
+			     agregar = DE.DecoradorSegundos(prod[0].getId_Cliente(),adiciona.getId_Producto(),None,None,prod[-1],None,None)
+			
+			if(agregar!=None):   
+			     prod.append(agregar)
+			     self.listaProducto[contador].setRenta(self.listaProducto[contador].getRenta()+agregar.getCostoServicio())
+			     
+			
+	    contador = contador + 1
+	
+            
+            
     """
 Metodo cargarConsumo:
 
@@ -333,6 +373,7 @@ la siguiente accion.
 
         producto.agregar(self.manejador)
         self.listaProducto.append(producto)
+        self.listaDecorados.append([producto])
 
     """
 Metodo agregarConsumo:
@@ -358,7 +399,22 @@ Agrega una afiliacion de servicio verificada a la lista de afiliaciones
     """
 
     def agregarAdiciona(self, adiciona):
-
+	contador = 0
+	for producto in self.listaProducto:
+	    
+	    if(adiciona.getNombre_Producto()==producto.getNombre() and \
+	      str(adiciona.getId_Producto())==str(producto.getIdn())):
+		  
+		  if(str(adiciona.getNombre_Servicio())=="Mensajes"):
+		      self.listaDecorados[contador].append(DE.DecoradorMensajes(producto.getId_Cliente(),adiciona.getNombre_Producto(),None,None,self.listaDecorados[contador][-1],None,None))
+		  elif(str(adiciona.getNombre_Servicio())=="Segundos"):
+		      self.listaDecorados[contador].append(DE.DecoradorSegundos(producto.getId_Cliente(),adiciona.getNombre_Producto(),None,None,self.listaDecorados[contador][-1],None,None))
+		  
+		  
+		  break
+	    contador = contador + 1
+	    
+	
         adiciona.agregar(self.manejador)
         self.listaAdiciona.append(adiciona)
 
@@ -429,6 +485,33 @@ Elimina una afiliacion de un servicio a un producto del sistema.
 
         tamano = len(self.listaAdiciona)
         encontrado= False
+        contador = 0
+        for producto in self.listaProducto:
+	    
+	    if(adiciona.getNombre_Producto()==producto.getNombre() and \
+	      str(adiciona.getId_Producto())==str(producto.getIdn())):
+		  contador2=0
+		  for decorador in self.listaDecorados[contador]:
+		      
+		      if(contador2==0):
+			  contador2 = contador2 + 1
+			  continue
+		      
+		      if(decorador.getNombreServicio()==adiciona.getNombre_Servicio() and\
+			  str(decorador.getIdn())==str(adiciona.getId_Producto())):
+			      self.listaDecorados[contador][0].setRenta(\
+				    self.listaDecorados[contador][0].getRenta()-decorador.getCostoServicio())
+			      if(contador2<len(self.listaDecorados[contador])-1):
+				  self.listaDecorados[contador][contador2+1].setPadre(self.listaDecorados[contador][contador2-1])
+			      del self.listaDecorados[contador][contador2]
+			      
+			      
+		      contador2 = contador2 + 1
+		    
+	    contador = contador + 1
+		  
+	  
+
         i=0
         while((i<tamano)and(not(encontrado))):
 
@@ -810,6 +893,7 @@ Sus acciones estan definidas y separadas segun la peticion del usuario.
                 print "El producto se ha afiliado con exito"
             else:
                 print 'No existe el servicio'
+
 
         elif(datos[0]==8): #desafiliar producto/servicio #1-nompr 2-idn 3-nomserv
         

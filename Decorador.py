@@ -4,7 +4,7 @@ from Producto import Producto
 class Decorador(Producto):
 
   def __init__(self,id_Cliente,idn,nombre,nombre_plan,rif_empresa,saldo):
-    super(Decorador,self).__init__(id_Cliente,idn,nombre,nombre_plan,rif_empresa,saldo)
+    super(Decorador,self).__init__(id_Cliente,idn,nombre,nombre_plan,None,rif_empresa,saldo)
   
 
   """Un objeto para poder anadir un servicio a un producto'"""

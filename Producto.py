@@ -15,7 +15,7 @@ class Producto(object):
 
 
     def imprimir(self):
-        print "El producto \""+str(self.nombre)+"\" tiene asociado el plan \""+str(self.nombre_plan) + "\" y pertenece \nal cliente de id: "+str(self.id_Cliente),
+        print "El producto \""+str(self.nombre)+"\" tiene asociado el plan \""+str(self.nombre_plan) + "\" y pertenece \nal cliente de id: "+str(self.id_Cliente)
 
 
     def agregar(self,BD):

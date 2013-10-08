@@ -8,9 +8,12 @@ class DecoradorSegundos(Decorador):
         super(DecoradorSegundos,self).__init__(id_Cliente,idn,nombre,nombre_plan,rif_empresa,saldo)
         self.padre = padre
         self.costoServicio = 300
-        self.nombreServicio = "200 segundos adicionales"
+        self.nombreServicio = "Segundos"
         pass
 
+    def setPadre(self,pad):
+	self.padre = pad
+        
     def getNombreServicio(self):
         return self.nombreServicio
 
@@ -18,8 +21,8 @@ class DecoradorSegundos(Decorador):
         return self.costoServicio
 
     def imprimir(self):
-        self.padre.imprimir(),
-        print ", posee el servicio \"" + self.nombreServicio+"\" que cuesta " + str(self.costoServicio),
+        self.padre.imprimir()
+        print "posee el servicio \"" + self.nombreServicio+"\" que cuesta " + str(self.costoServicio)
 
     def agregar(self,BD):
         adicionado = Adiciona(self.idn,self.nombre,self.nombreServicio)
@@ -33,7 +36,10 @@ class DecoradorMensajes(Decorador):
         super(DecoradorMensajes,self).__init__(id_Cliente,idn,nombre,nombre_plan,rif_empresa,saldo)
         self.padre = padre
         self.costoServicio = 200
-        self.nombreServicio = "300 mensajes adicionales"
+        self.nombreServicio = "Mensajes"
+   
+    def setPadre(self,pad):
+	self.padre = pad
    
     def getNombreServicio(self):
         return self.nombreServicio
@@ -43,7 +49,7 @@ class DecoradorMensajes(Decorador):
 
     def imprimir(self):
         self.padre.imprimir()
-        print ", posee el servicio \"" + self.nombreServicio+"\" que cuesta " + str(self.costoServicio),
+        print "posee el servicio \"" + self.nombreServicio+"\" que cuesta " + str(self.costoServicio)
     
     def agregar(self,BD):
         adicionado = Adiciona(self.idn,self.nombre,self.nombreServicio)

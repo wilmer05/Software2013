@@ -1,6 +1,6 @@
 # -*- coding: iso-8859-15 -*-
 import sys
-    
+
 """
 Clase InterfazUsuario:
 
@@ -8,7 +8,6 @@ Clase dedicada a la interaccion con el usuario.
 Segun la accion que se desea realizar se piden los datos necesarios.
     
 """
-
 class InterfazUsuario:
 
     """
@@ -17,10 +16,11 @@ Constructor de la clase:
 Se inicializa la lista donde se guardaran los datos a procesar.
 
     """
+
     def __init__(self):
 
         self.datos = []
-
+        
     """
 metodo obtenerAccion:
 
@@ -29,7 +29,7 @@ proceso.
 
     
     """
-
+    
     def obtenerAccion(self):
 
         correcto = False
@@ -57,7 +57,7 @@ En este menu se obtienen los datos completos del cliente.
 
     
     """
-
+        
     def obtenerCliente(self):
 
         print ">Por favor, ingresa los datos principales del cliente"
@@ -88,7 +88,6 @@ En este menu se obtienen los datos minimos para reconocer cliente.
 
     
     """
-
     def obtenerClaveCliente(self):
 
         print ">Por favor, ingresa los datos principales del cliente"
@@ -106,15 +105,15 @@ En este menu se obtienen los datos minimos para reconocer cliente.
         else:
             rif = raw_input('RIF: ') 
             self.datos.append(rif)
- 
+
     """
 metodo obtenerProducto:
 
 En este menu se obtienen los datos completos del producto.
 
     
-    """
-       
+    """            
+            
     def obtenerProducto(self):
 
         print ">Por favor, ingresa los datos principales del producto a agregar"
@@ -145,8 +144,8 @@ metodo obtenerClaveProducto:
 En este menu se obtienen los datos minimos para reconocer un producto.
 
     
-    """
-
+    """        
+        
     def obtenerClaveProducto(self): 
 
         print ">Por favor, ingresa los datos principales del producto:"
@@ -157,7 +156,7 @@ En este menu se obtienen los datos minimos para reconocer un producto.
                 if (not id_emp.isdigit()):
                    print 'El identificador debe ser un número' 
         self.datos.append(int(id_emp)) 
- 
+
 
     """
 metodo obtenerServicio:
@@ -166,6 +165,7 @@ En este menu se obtienen los datos minimos para reconocer un servicio.
 
     
     """        
+        
                 
     def obtenerServicio(self):  
 
@@ -191,14 +191,6 @@ En este menu se obtienen los datos minimos para reconocer un servicio.
                    print 'El identificador debe ser un número' 
         self.datos.append(int(id_emp)) 
 
-
-    """
-metodo obtenerFactura:
-
-En este menu se obtienen los datos para procesar una factura.
-
-    
-    """
 
     def obtenerFactura(self):
 
@@ -244,6 +236,7 @@ En este menu se obtienen los datos para procesar una factura.
         else:
             self.datos.append("pos")
 
+
     """
 metodo obtenerDatos:
 
@@ -251,8 +244,8 @@ Este metodo tiene todo los submenus para cada actor y ofrece las
 acciones que se puede realizar.
 
     
-    """
-
+    """            
+            
     def obtenerDatos(self,seleccion):
 
         seleccion = int(seleccion)
@@ -358,6 +351,7 @@ acciones que se puede realizar.
 
                 self.obtenerFactura()     
 
+                
 
     """
 metodo obtenerConexion:
@@ -366,8 +360,9 @@ En este menu se obtienen los datos necesarios para hacer la conexion
 con la base de datos.
 
     
-    """
-
+    """                
+                
+                
     def obtenerConexion(self):
 
         bdname=raw_input("Introduzca nombre de la base de datos:")
@@ -375,9 +370,9 @@ con la base de datos.
         password=raw_input("Introduzca su password:")
         self.datos = [bdname, password, username]
 
-
-
+        
     #Se obtiene la lista con los datos completos
+        
     def getDatos(self):
 
         return self.datos 
