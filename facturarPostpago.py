@@ -114,7 +114,6 @@ class facturarPostpago:
 	if ((w.getNombre_Producto() == nombreprod) & (str(w.getId_Producto()) == idprod)):
 	  lservs.append(w)
 	  
-      print "servicios para este prod:",lservs
 	   
       #Vemos lo incluido en dichos servicios y metemos todo en una lista
       lincluservs=[]
@@ -126,12 +125,12 @@ class facturarPostpago:
 	#Recorro a ver que tiene incluido el servicio x
 	for y in lincluServ:
 	  if (x.getNombre_Servicio() == y.getNombre_Sextr()):
-	    if (not((x.getNombre_Servicio in laux2) & (y.getTipo() in laux2))):
+	    if (((x.getNombre_Servicio() not  in laux2)) & ((y.getTipo() not in laux2))):
 	      lincluservs.append(y.getTipo())
 	      lincluservs.append(int(y.getCantidad()))
 	      laux2.append(x.getNombre_Servicio())
 	      laux2.append(y.getTipo())
-	      
+
 	#Mezclo las listas de incluidoplan e incluidoservs para tener una total
 	
 	#Recorro la lista de lo que se incluye en todos sus servs extra:
@@ -148,7 +147,7 @@ class facturarPostpago:
 	    i4=lincluservs.index(d)
 	    linclud.append(d)
 	    linclud.append(int(lincluservs[i4+1]))
-      
+    
 	#Sumaremos las rentas de los servicios que tiene afiliado
 	#Veo los servicios que ha adicionado y lo comparo con 
 	#los servicios en general, si coinice, agarro su costo.
